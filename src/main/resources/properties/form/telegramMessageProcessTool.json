@@ -1,0 +1,39 @@
+[{
+        "title" : "@@TelegramMessageProcessTool.config@@",
+        "properties" : [
+        {
+                "name" : "botToken",
+                "label": "@@TelegramMessageProcessTool.token@@",
+                "type" : "Password",
+                "maxLength" : "45"
+        },
+
+        {
+                "name" : "groupId",
+                "label" : "@@TelegramMessageProcessTool.groupId@@",
+                "type" : "textfield"
+        },
+        
+        {
+                "name" : "userName",
+                "label" : "@@TelegramMessageProcessTool.username@@",
+                "type" : "textfield",
+                "value" : "@@TelegramMessageProcessTool.username.value@@"
+                
+        },
+        
+        {
+                "name" : "header",
+                "label" : "@@TelegramMessageProcessTool.header@@",
+                "type" : "textfield"
+        },
+        
+        {
+                "name" : "message",
+                "label" : "@@TelegramMessageProcessTool.message@@",
+                "type" : "textfield"
+        }]
+        
+        
+}]
+
