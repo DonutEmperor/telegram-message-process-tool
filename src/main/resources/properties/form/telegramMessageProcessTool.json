@@ -1,39 +1,70 @@
 [{
-        "title" : "@@TelegramMessageProcessTool.config@@",
-        "properties" : [
-        {
-                "name" : "botToken",
+        "title": "@@TelegramMessageProcessTool.config@@",
+        "properties": [
+            {
+                "name": "botToken",
                 "label": "@@TelegramMessageProcessTool.token@@",
-                "type" : "Password",
-                "maxLength" : "45"
-        },
+                "type": "Password",
+                "maxLength": "45",
+                "required" : "true"
+            },
 
-        {
-                "name" : "groupId",
-                "label" : "@@TelegramMessageProcessTool.groupId@@",
+            {
+                "name": "groupId",
+                "label": "@@TelegramMessageProcessTool.groupId@@",
+                "type": "textfield",
+                "required" : "true"
+            },
+
+            {
+                "name": "userName",
+                "label": "@@TelegramMessageProcessTool.username@@",
+                "type": "textfield",
+                "value": "@@TelegramMessageProcessTool.username.value@@",
+                "required": "true"
+            },
+
+            {
+                "name": "header",
+                "label": "@@TelegramMessageProcessTool.header@@",
+                "type": "textfield",
+                "required": "true"
+            },
+
+            {
+                "name": "message",
+                "label": "@@TelegramMessageProcessTool.message@@",
+                "type": "textfield",
+                "required": "true"
+            },
+            
+            {
+                "name" : "link",
+                "label" : "@@TelegramMessageProcessTool.link@@",
+                "type": "textfield",
+                "description" : "@@TelegramMessageProcessTool.link.desc@@"
+            },
+            {
+                "name": "caption",
+                "label":"@@TelegramMessageProcessTool.caption@@",
                 "type" : "textfield"
-        },
-        
-        {
-                "name" : "userName",
-                "label" : "@@TelegramMessageProcessTool.username@@",
-                "type" : "textfield",
-                "value" : "@@TelegramMessageProcessTool.username.value@@"
-                
-        },
-        
-        {
-                "name" : "header",
-                "label" : "@@TelegramMessageProcessTool.header@@",
-                "type" : "textfield"
-        },
-        
-        {
-                "name" : "message",
-                "label" : "@@TelegramMessageProcessTool.message@@",
-                "type" : "textfield"
-        }]
-        
-        
-}]
+            },
+            {
+                "name" : "formDefId",
+                "label" : "@@TelegramMessageProcessTool.form@@",
+                "type" : "selectbox",
+                "options_ajax" : "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/forms/options",
+                "required" : "True"
+            },
+            {
+                "name":"recordId",
+                "label":"@@TelegramMessageProcessTool.record@@",
+                "type":"textfield"
+            },
+            {
+                "name":"imgId",
+                "label":"@@TelegramMessageProcessTool.img@@",
+                "type":"textfield"
+            }]
+    }]
 

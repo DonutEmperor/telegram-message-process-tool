@@ -6,13 +6,18 @@ package org.joget.marketplace;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.joget.apps.app.model.AppDefinition;
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.commons.util.LogUtil;
 import org.joget.plugin.base.DefaultApplicationPlugin;
+import org.joget.workflow.util.WorkflowUtil;
 
 /**
  *
@@ -64,17 +69,47 @@ public class TelegramMessageProcessTool extends DefaultApplicationPlugin{
         String groupId = getPropertyString("groupId");
         String message = getPropertyString("message");
         String header = getPropertyString("header");
+//        String image = getPropertyString("image");
+        String link = getPropertyString("link");
+        String caption = getPropertyString("caption");
+        String formDefId = getPropertyString("formDefId");
         
-        //The url concatenated
-        String theUrl = url + botToken + "/" + "sendMessage?chat_id=" + groupId + "&" + "parse_mode=HTML&text=<b>" + header + "</b>%0A" + message + "%0ABy%0A<b>" + userName + "</b>";  
+        String recordId = getPropertyString("recordId");
+        String imgId = getPropertyString("imgId");
         
+        //Added HTML tag to inserted Link 
+        if(link!= null){
+            message += "<a href=" + "\"" +  link + "\">" + link + "</a>";
+        }
         
-        //Make connection request to url
+        //Encode Image File
+        String encodedFileName = imgId;
+        try {
+            encodedFileName = URLEncoder.encode(imgId, "UTF8").replaceAll("\\+", "%20");
+        } catch (UnsupportedEncodingException ex) {
+            // ignore
+        }        
+        
+        AppDefinition appDef = AppUtil.getCurrentAppDefinition();
+        HttpServletRequest request = WorkflowUtil.getHttpServletRequest();
+        
+        //The url appended
+        String theUrl = url + botToken + "/" + "sendMessage?chat_id=" + groupId + "&" + "parse_mode=HTML&text=<b>" + header + "</b>%0A" + message + "%0ABy%0A<b>" + userName + "</b>";
+                
+        //Make connection request to url    
         try{
             URL result = new URL(theUrl);
             URLConnection conn = result.openConnection();
             conn.connect();
             InputStream is = new BufferedInputStream(conn.getInputStream());
+            
+//           if(image!=null){
+            String picUrl = url + botToken + "/" + "sendPhoto?chat_id=" + groupId + "&" + "photo=" + "https://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/web/client/app/" + appDef.getAppId() + "/" + appDef.getVersion().toString() + "/" + "form/download/" + formDefId + "/" + recordId + "/" + encodedFileName + "." + "&" + "caption=" + caption;
+            URL picResult = new URL(picUrl);
+            URLConnection picConn = picResult.openConnection();
+            picConn.connect();
+            InputStream picIs = new BufferedInputStream(picConn.getInputStream());
+//         }
         }catch(Exception e){
             LogUtil.error(this.getClassName(), e, "Fail to send Message");
         }
